@@ -1,0 +1,26 @@
+# Dependency folders
+node_modules/
+brower_components/
+
+# Build outputs
+dist/
+build/
+.next/
+out/
+
+# Version control & IDEs
+.git/
+.vscode/
+.idea/
+
+# Large assets
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.mp4
+
+# Logs
+*.log
+npm-debug.log*
