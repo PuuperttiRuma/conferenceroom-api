@@ -1,4 +1,4 @@
-import { Reservation } from '../models/Reservation';
+import type { Reservation } from "../models/Reservation";
 
 export class ReservationRepository {
   private static instance: ReservationRepository;

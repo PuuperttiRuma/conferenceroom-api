@@ -1,4 +1,4 @@
-## USER 🧑‍💻
+# USER 🧑‍💻
 
 This is the Gemini CLI. We are setting up the context for our chat.
 Today's date is Thursday, January 29, 2026 (formatted according to the user's locale).
@@ -2363,3 +2363,15 @@ Now, let's try the cancel script using the ID we just got.
 The cancellation was successful (HTTP 204). 
 
 Our manual testing confirms the basic functionality is working. What would you like to do next? We could refine the error handling, add more features, or revisit the automated tests.
+
+---
+
+## USER 🧑‍💻
+
+### PHASE 2 ###
+
+---
+
+## USER 🧑‍💻
+
+# PHASE 2 - I'll start creating and fixing the code from now on.

@@ -1,5 +1,7 @@
 # Analyysi
 ## 1. Mitä tekoäly teki hyvin?
+Expressin Request import pieleen. Kopioi koodin netistä ja jos kaikki on kirjoittaneet sen netistä, you get that.
+
 ## 2. Mitä tekoäly teki huonosti?
 ## 3. Mitkä olivat tärkeimmät parannukset, jotka teit tekoälyn tuottamaan koodiin ja miksi?
 
@@ -18,3 +20,5 @@ Muutamia aloittelijavirheitä:
 - Mallien free-tierit on melkoisen rajattuja, piti lopettaa sessio melko nopeasti. Koska quota loppui :(
 - Näköjään .geminiignore pitää tehdä itse. Ihmekös quota loppui kun heitti node_modulesin contextiin x_x
 
+### 30.1.
+Otin Geminin maksulliseksi niin ei tarvitse hermoilla quotan kanssa.

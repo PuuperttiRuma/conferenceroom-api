@@ -1,5 +1,5 @@
-import { Request, Response } from 'express';
-import { ReservationService } from '../services/ReservationService';
+import type { Request, Response } from "express";
+import { ReservationService } from "../services/ReservationService";
 
 export class ReservationController {
   private service: ReservationService;
@@ -28,7 +28,7 @@ export class ReservationController {
     if (success) {
       return res.status(204).send();
     }
-    return res.status(404).json({ message: 'Reservation not found' });
+    return res.status(404).json({ message: "Reservation not found" });
   };
 
   public listByRoom = async (req: Request, res: Response) => {

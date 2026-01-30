@@ -1,7 +1,8 @@
-import { Request, Response, NextFunction } from 'express';
-import { AnyZodObject, ZodError } from 'zod';
+import type { Request, Response, NextFunction } from "express";
+import { AnyZodObject, ZodError } from "zod";
 
-export const validate = (schema: AnyZodObject) => 
+export const validate =
+  (schema: AnyZodObject) =>
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       await schema.parseAsync({
@@ -13,13 +14,15 @@ export const validate = (schema: AnyZodObject) =>
     } catch (error) {
       if (error instanceof ZodError) {
         return res.status(400).json({
-          status: 'fail',
-          errors: error.errors.map(e => ({
+          status: "fail",
+          errors: error.errors.map((e) => ({
             path: e.path,
-            message: e.message
-          }))
+            message: e.message,
+          })),
         });
       }
-      return res.status(500).json({ status: 'error', message: 'Internal server error' });
+      return res
+        .status(500)
+        .json({ status: "error", message: "Internal server error" });
     }
   };
