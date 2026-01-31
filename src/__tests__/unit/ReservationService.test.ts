@@ -3,11 +3,6 @@ import { ReservationService } from "@/services/ReservationService";
 import { ReservationRepository } from "@/repositories/ReservationRepository";
 import type { CreateReservationInput } from "@/models/Reservation";
 
-// Mock uuid to control generated IDs in tests
-vi.mock("uuid", () => ({
-  v4: () => "mock-uuid",
-}));
-
 describe("ReservationService", () => {
   let service: ReservationService;
   let repository: ReservationRepository;
@@ -36,13 +31,14 @@ describe("ReservationService", () => {
     const reservation = await service.createReservation(input);
 
     expect(reservation).toBeDefined();
-    expect(reservation.id).toBe("mock-uuid");
+    expect(reservation.id).toBeDefined();
+    expect(typeof reservation.id).toBe("string");
     expect(reservation.roomId).toBe(input.roomId);
     expect(reservation.startTime.toISOString()).toBe(
       input.startTime.toISOString(),
     );
     expect(reservation.endTime.toISOString()).toBe(input.endTime.toISOString());
-    expect(await repository.findById("mock-uuid")).toEqual(reservation);
+    expect(await repository.findById(reservation.id)).toEqual(reservation);
   });
 
   it("should throw error if reservation starts after or at end time", async () => {
@@ -94,8 +90,8 @@ describe("ReservationService", () => {
   it("should cancel a reservation", async () => {
     const input: CreateReservationInput = {
       roomId: "room1",
-      startTime: new Date("2026-01-29T10:00:00Z"),
-      endTime: new Date("2026-01-29T11:00:00Z"),
+      startTime: new Date("2026-01-29T11:00:00Z"),
+      endTime: new Date("2026-01-29T12:00:00Z"),
     };
     const reservation = await service.createReservation(input);
 
@@ -115,13 +111,13 @@ describe("ReservationService", () => {
       startTime: new Date("2026-01-29T11:00:00Z"),
       endTime: new Date("2026-01-29T12:00:00Z"),
     });
-    // Change mocked uuid for the second reservation
-    vi.mock("uuid", () => ({ v4: () => "mock-uuid-2" }));
+    
     const room1Reservation2 = await service.createReservation({
       roomId: "room1",
-      startTime: new Date("2026-01-29T12:00:00Z"),
-      endTime: new Date("2026-01-29T13:00:00Z"),
+      startTime: new Date("2026-01-29T13:00:00Z"),
+      endTime: new Date("2026-01-29T14:00:00Z"),
     });
+
     await service.createReservation({
       roomId: "room2",
       startTime: new Date("2026-01-29T11:00:00Z"),
@@ -135,4 +131,3 @@ describe("ReservationService", () => {
     );
   });
 });
-

@@ -1,4 +1,4 @@
-- [ ] Käy tiedostot läpi.
+- [x] Käy tiedostot läpi.
     - [x] index
     - [x] api
     - [x] reservationRoutes
@@ -7,7 +7,7 @@
     - [x] ReservationService.ts 
     - [x] ReservationRepository.ts
     - [x] models/Reservation.ts
-    - [ ] testit 
+    - [x] testit 
 
 ## Yleistä
 - [x] Tyyppi importit explisiittisiksi
@@ -21,7 +21,7 @@
 
 ## middleware/validation.ts
 - [x] Fix typescript errors
-- [ ] 
+- [x] Rename validation function
 
 ## reservationControllers.ts
 - [ ] Pitkä try catch createssa
@@ -33,13 +33,11 @@
 ## service ja Repo
 - [ ] Delete ei tarkista ID:Tä
 - [ ] 
-- [ ] 
 
 # Testit
 ## ReservationService
-- [ ] should create a reservation
-    - pitää varmaan resetata mock-uuid
-- [ ] should cancel a reservation
+- [x] should create a reservation
+- [x] should cancel a reservation
 ## ReservationRoutes
 - [ ] should return 400 for invalid data
 - [ ] 
