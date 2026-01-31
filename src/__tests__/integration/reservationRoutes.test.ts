@@ -13,20 +13,17 @@ describe('Reservation API Integration Tests', () => {
 
   beforeEach(async () => {
     await repository.clear(); // Clear the repository before each test
-    vi.useFakeTimers();
-    vi.setSystemTime(new Date('2026-01-29T10:00:00Z'));
   });
 
   afterEach(() => {
-    vi.useRealTimers();
     vi.restoreAllMocks();
   });
 
   it('should create a new reservation', async () => {
     const reservationData = {
       roomId: 'roomA',
-      startTime: new Date('2026-01-29T11:00:00Z').toISOString(),
-      endTime: new Date('2026-01-29T12:00:00Z').toISOString(),
+      startTime: new Date('2026-02-01T11:00:00Z').toISOString(),
+      endTime: new Date('2026-02-01T12:00:00Z').toISOString(),
     };
 
     const res = await request(app)
@@ -59,8 +56,8 @@ describe('Reservation API Integration Tests', () => {
   it('should return 400 if reservation start time is after end time', async () => {
     const reservationData = {
       roomId: 'roomB',
-      startTime: new Date('2026-01-29T12:00:00Z').toISOString(),
-      endTime: new Date('2026-01-29T11:00:00Z').toISOString(),
+      startTime: new Date('2026-02-01T12:00:00Z').toISOString(),
+      endTime: new Date('2026-02-01T11:00:00Z').toISOString(),
     };
 
     const res = await request(app)
@@ -74,8 +71,8 @@ describe('Reservation API Integration Tests', () => {
   it('should return 400 if reservation is in the past', async () => {
     const reservationData = {
       roomId: 'roomC',
-      startTime: new Date('2026-01-01T10:00:00Z').toISOString(),
-      endTime: new Date('2026-01-01T11:00:00Z').toISOString(),
+      startTime: new Date('2020-01-01T10:00:00Z').toISOString(),
+      endTime: new Date('2020-01-01T11:00:00Z').toISOString(),
     };
 
     const res = await request(app)
@@ -87,8 +84,8 @@ describe('Reservation API Integration Tests', () => {
   });
 
   it('should return 400 if reservations overlap', async () => {
-    const existingStartTime = new Date('2026-01-29T11:00:00Z');
-    const existingEndTime = new Date('2026-01-29T12:00:00Z');
+    const existingStartTime = new Date('2026-02-01T11:00:00Z');
+    const existingEndTime = new Date('2026-02-01T12:00:00Z');
 
     await repository.create({
       id: 'existing-id',
@@ -100,8 +97,8 @@ describe('Reservation API Integration Tests', () => {
 
     const overlappingReservationData = {
       roomId: 'roomD',
-      startTime: new Date('2026-01-29T11:30:00Z').toISOString(),
-      endTime: new Date('2026-01-29T12:30:00Z').toISOString(),
+      startTime: new Date('2026-02-01T11:30:00Z').toISOString(),
+      endTime: new Date('2026-02-01T12:30:00Z').toISOString(),
     };
 
     const res = await request(app)
@@ -117,15 +114,15 @@ describe('Reservation API Integration Tests', () => {
     const reservation1 = {
       id: 'res-e1',
       roomId: roomEId,
-      startTime: new Date('2026-01-29T11:00:00Z'),
-      endTime: new Date('2026-01-29T12:00:00Z'),
+      startTime: new Date('2026-02-01T11:00:00Z'),
+      endTime: new Date('2026-02-01T12:00:00Z'),
       createdAt: new Date(),
     };
     const reservation2 = {
       id: 'res-e2',
       roomId: roomEId,
-      startTime: new Date('2026-01-29T13:00:00Z'),
-      endTime: new Date('2026-01-29T14:00:00Z'),
+      startTime: new Date('2026-02-01T13:00:00Z'),
+      endTime: new Date('2026-02-01T14:00:00Z'),
       createdAt: new Date(),
     };
 
@@ -145,8 +142,8 @@ describe('Reservation API Integration Tests', () => {
     await repository.create({
       id: reservationId,
       roomId: 'roomF',
-      startTime: new Date('2026-01-29T11:00:00Z'),
-      endTime: new Date('2026-01-29T12:00:00Z'),
+      startTime: new Date('2026-02-01T11:00:00Z'),
+      endTime: new Date('2026-02-01T12:00:00Z'),
       createdAt: new Date(),
     });
 

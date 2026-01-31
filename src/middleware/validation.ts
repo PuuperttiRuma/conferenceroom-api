@@ -1,8 +1,8 @@
 import type { Request, Response, NextFunction } from "express";
-import { AnyZodObject, ZodError } from "zod";
+import { ZodError } from "zod";
 
 export const validateReservation =
-  (schema: AnyZodObject) =>
+  (schema: any) =>
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       await schema.parseAsync({
@@ -11,14 +11,14 @@ export const validateReservation =
         params: req.params,
       });
       return next();
-    } catch (error) {
-      if (error instanceof ZodError) {
+    } catch (error: any) {
+      if (error instanceof ZodError || error.name === "ZodError") {
         return res.status(400).json({
           status: "fail",
-          errors: error.errors.map((e) => ({
+          errors: error.errors?.map((e: any) => ({
             path: e.path,
             message: e.message,
-          })),
+          })) || [],
         });
       }
       return res

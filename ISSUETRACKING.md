@@ -39,5 +39,5 @@
 - [x] should create a reservation
 - [x] should cancel a reservation
 ## ReservationRoutes
-- [ ] should return 400 for invalid data
+- [x] should return 400 for invalid data
 - [ ] 
