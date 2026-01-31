@@ -5,6 +5,11 @@ import type {
   CreateReservationInput,
 } from "../models/Reservation";
 import { ReservationRepository } from "../repositories/ReservationRepository";
+import {
+  BadRequestError,
+  ConflictError,
+  NotFoundError,
+} from "../errors/AppErrors";
 
 export class ReservationService {
   private repository: ReservationRepository;
@@ -20,12 +25,12 @@ export class ReservationService {
 
     // 1. Reservation has to start before it ends
     if (!isBefore(startTime, endTime)) {
-      throw new Error("Reservation must start before it ends.");
+      throw new BadRequestError("Reservation must start before it ends.");
     }
 
     // 2. A room can only be reserved in the future
     if (!isFuture(startTime)) {
-      throw new Error("Reservation must be in the future.");
+      throw new BadRequestError("Reservation must be in the future.");
     }
 
     // 3. The reservations to a specific room cannot overlap
@@ -38,7 +43,7 @@ export class ReservationService {
     );
 
     if (hasOverlap) {
-      throw new Error("Room is already reserved for this time period.");
+      throw new ConflictError("Room is already reserved for this time period.");
     }
 
     const newReservation: Reservation = {
@@ -52,8 +57,11 @@ export class ReservationService {
     return this.repository.create(newReservation);
   }
 
-  public async cancelReservation(id: string): Promise<boolean> {
-    return this.repository.delete(id);
+  public async cancelReservation(id: string): Promise<void> {
+    const success = await this.repository.delete(id);
+    if (!success) {
+      throw new NotFoundError("Reservation not found");
+    }
   }
 
   public async getRoomReservations(roomId: string): Promise<Reservation[]> {

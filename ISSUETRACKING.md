@@ -11,23 +11,18 @@
 
 ## Yleistä
 - [x] Tyyppi importit explisiittisiksi
-- [ ] 
 
 ## reservationRoutes.ts
-- [ ] Vaihda controlloreiden nimet postReservation muotoon
-- [ ] Luo hae huoneet end point
-- [ ] Tee dummy huonelistaus (vain id?)
-- [ ] 
 
 ## middleware/validation.ts
 - [x] Fix typescript errors
 - [x] Rename validation function
 
 ## reservationControllers.ts
-- [ ] Pitkä try catch createssa
-- [ ] line 20: error any 
-- [ ] Cancel: ei validoi onko ID:tä
-- [ ] listRoom: ei validoi onko ID:tä 
+- [x] Pitkä try catch createssa
+- [x] line 20: error any 
+- [x] Cancel: ei validoi onko ID:tä
+- [x] listRoom: ei validoi onko ID:tä 
 - [ ] 
 
 ## service ja Repo

@@ -95,14 +95,14 @@ describe("ReservationService", () => {
     };
     const reservation = await service.createReservation(input);
 
-    const cancelled = await service.cancelReservation(reservation.id);
-    expect(cancelled).toBe(true);
+    await service.cancelReservation(reservation.id);
     expect(await repository.findById(reservation.id)).toBeUndefined();
   });
 
-  it("should return false if trying to cancel a non-existent reservation", async () => {
-    const cancelled = await service.cancelReservation("non-existent-id");
-    expect(cancelled).toBe(false);
+  it("should throw error if trying to cancel a non-existent reservation", async () => {
+    await expect(service.cancelReservation("non-existent-id")).rejects.toThrow(
+      "Reservation not found",
+    );
   });
 
   it("should get all reservations for a specific room", async () => {

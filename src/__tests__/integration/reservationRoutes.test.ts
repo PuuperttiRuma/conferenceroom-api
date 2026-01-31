@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import request from 'supertest';
 import app from '@/app';
 import { ReservationRepository } from '@/repositories/ReservationRepository';
+import { ReservationService } from '@/services/ReservationService';
 
 // Mock uuid to control generated IDs in tests
 vi.mock('uuid', () => ({
@@ -159,5 +160,25 @@ describe('Reservation API Integration Tests', () => {
     await request(app)
       .delete('/api/reservations/non-existent-id')
       .expect(404);
+  });
+
+  it('should return 500 if listing reservations fails', async () => {
+    vi.spyOn(ReservationService.prototype, 'getRoomReservations').mockRejectedValue(new Error('Service Failure'));
+
+    const res = await request(app)
+      .get('/api/rooms/roomA/reservations')
+      .expect(500);
+
+    expect(res.body).toHaveProperty('message', 'Internal server error');
+  });
+
+  it('should return 500 if canceling a reservation fails', async () => {
+    vi.spyOn(ReservationService.prototype, 'cancelReservation').mockRejectedValue(new Error('Service Failure'));
+
+    const res = await request(app)
+      .delete('/api/reservations/some-id')
+      .expect(500);
+
+    expect(res.body).toHaveProperty('message', 'Internal server error');
   });
 });

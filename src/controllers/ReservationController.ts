@@ -1,5 +1,6 @@
 import type { Request, Response } from "express";
 import { ReservationService } from "../services/ReservationService";
+import { AppError } from "../errors/AppErrors";
 
 export class ReservationController {
   private service: ReservationService;
@@ -17,23 +18,37 @@ export class ReservationController {
         endTime: new Date(endTime),
       });
       return res.status(201).json(reservation);
-    } catch (error: any) {
-      return res.status(400).json({ message: error.message });
+    } catch (error) {
+      if (error instanceof AppError) {
+        return res.status(error.statusCode).json({ message: error.message });
+      }
+      return res.status(500).json({ message: "Internal server error" });
     }
   };
 
   public cancel = async (req: Request, res: Response) => {
-    const { id } = req.params;
-    const success = await this.service.cancelReservation(id);
-    if (success) {
+    try {
+      const { id } = req.params;
+      await this.service.cancelReservation(id);
       return res.status(204).send();
+    } catch (error) {
+      if (error instanceof AppError) {
+        return res.status(error.statusCode).json({ message: error.message });
+      }
+      return res.status(500).json({ message: "Internal server error" });
     }
-    return res.status(404).json({ message: "Reservation not found" });
   };
 
   public listByRoom = async (req: Request, res: Response) => {
-    const { roomId } = req.params;
-    const reservations = await this.service.getRoomReservations(roomId);
-    return res.json(reservations);
+    try {
+      const { roomId } = req.params;
+      const reservations = await this.service.getRoomReservations(roomId);
+      return res.json(reservations);
+    } catch (error) {
+      if (error instanceof AppError) {
+        return res.status(error.statusCode).json({ message: error.message });
+      }
+      return res.status(500).json({ message: "Internal server error" });
+    }
   };
 }
