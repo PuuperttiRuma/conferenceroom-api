@@ -10,9 +10,7 @@
     - [ ] testit 
 
 ## Yleistä
-- [ ] Tyyppi importit explisiittisiksi
-- [ ] 
-- [ ] 
+- [x] Tyyppi importit explisiittisiksi
 - [ ] 
 
 ## reservationRoutes.ts
@@ -22,7 +20,7 @@
 - [ ] 
 
 ## middleware/validation.ts
-- [ ] Fix typescript errors
+- [x] Fix typescript errors
 - [ ] 
 
 ## reservationControllers.ts

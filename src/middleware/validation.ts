@@ -1,7 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
 import { AnyZodObject, ZodError } from "zod";
 
-export const validate =
+export const validateReservation =
   (schema: AnyZodObject) =>
   async (req: Request, res: Response, next: NextFunction) => {
     try {
